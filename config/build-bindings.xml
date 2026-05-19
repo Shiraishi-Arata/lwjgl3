@@ -55,10 +55,20 @@ This script is included in /config/build-definitions.xml.
     </condition>
     <property name="binding.renderdoc" value="true"/>
     <property name="binding.rpmalloc" value="true"/>
-    <property name="binding.sdl" value="true"/>
+    <condition property="binding.sdl" value="false" else="true">
+        <and>
+            <isset property="platform.linux"/>
+            <isset property="build.arch.x86"/>
+        </and>
+    </condition>
     <property name="binding.shaderc" value="true"/>
     <property name="binding.spng" value="true"/>
-    <property name="binding.spvc" value="true"/>
+    <condition property="binding.spvc" value="false" else="true">
+        <and>
+            <isset property="platform.linux"/>
+            <isset property="build.arch.x86"/>
+        </and>
+    </condition>
     <property name="binding.stb" value="true"/>
     <property name="binding.tinyexr" value="true"/>
     <property name="binding.tinyfd" value="true"/>
