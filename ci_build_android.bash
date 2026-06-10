@@ -17,6 +17,11 @@ elif [ "$LWJGL_BUILD_ARCH" == "x86" ]; then
     mkdir -p bin/libs/native/linux/x86/org/lwjgl/$dir
     touch bin/libs/native/linux/x86/org/lwjgl/$dir/lib$dir.so
   done
+  # sdl and spvc have different lib names than dir names
+  mkdir -p bin/libs/native/linux/x86/org/lwjgl/sdl
+  touch bin/libs/native/linux/x86/org/lwjgl/sdl/libSDL3.so
+  mkdir -p bin/libs/native/linux/x86/org/lwjgl/spvc
+  touch bin/libs/native/linux/x86/org/lwjgl/spvc/libspirv-cross.so
 elif [ "$LWJGL_BUILD_ARCH" == "x64" ]; then
   export NDK_ABI=x86_64 NDK_TARGET=x86_64
 fi
