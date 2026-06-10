@@ -13,8 +13,10 @@ elif [ "$LWJGL_BUILD_ARCH" == "arm32" ]; then
 elif [ "$LWJGL_BUILD_ARCH" == "x86" ]; then
   export NDK_ABI=x86 NDK_TARGET=i686
   # Workaround: LWJGL 3 lacks of x86 Linux libraries
-  mkdir -p bin/libs/native/linux/x86/org/lwjgl/{freetype,glfw,jemalloc,shaderc}
-  touch bin/libs/native/linux/x86/org/lwjgl/{freetype/libfreetype.so,glfw/libglfw.so,jemalloc/libjemalloc.so,libshaderc.so}
+  for dir in freetype glfw jemalloc shaderc openal; do
+    mkdir -p bin/libs/native/linux/x86/org/lwjgl/$dir
+    touch bin/libs/native/linux/x86/org/lwjgl/$dir/lib$dir.so
+  done
 elif [ "$LWJGL_BUILD_ARCH" == "x64" ]; then
   export NDK_ABI=x86_64 NDK_TARGET=x86_64
 fi
