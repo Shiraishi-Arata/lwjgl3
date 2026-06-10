@@ -284,8 +284,8 @@
             </link>
         </build>
 
-        <!-- NativeFileDialog -->
-        <build module="nfd" simple="true" linker="g++" if:true="${binding.nfd}">
+        <!-- NativeFileDialog (Linux desktop - GTK) -->
+        <build module="nfd" simple="true" linker="g++" if:true="${binding.nfd}" unless:set="env.ANDROID">
             <beforeCompile>
                 <compile lang="c++">
                     <arg value="-I/usr/include/gtk-3.0"/>
@@ -311,7 +311,20 @@
                 <arg value="-lgdk-3"/>
             </link>
         </build>
-        <build module="nfd" suffix="_portal" simple="true" linker="g++" if:true="${binding.nfd}">
+        <!-- NativeFileDialog (Android - JNI bridge) -->
+        <build module="nfd" simple="true" linker="g++" if:true="${binding.nfd}" if:set="env.ANDROID">
+            <beforeCompile>
+                <compile lang="c++">
+                    <arg value="-I${src.main.rel}/include"/>
+                    <fileset dir="." includes="${src.main}/nfd_android.cpp"/>
+                </compile>
+            </beforeCompile>
+            <source>
+                <arg value="-I${src.main.rel}/include"/>
+            </source>
+        </build>
+        <!-- NativeFileDialog (Linux desktop - Portal) -->
+        <build module="nfd" suffix="_portal" simple="true" linker="g++" if:true="${binding.nfd}" unless:set="env.ANDROID">
             <beforeCompile>
                 <compile lang="c++">
                     <arg line="-I/usr/include/dbus-1.0 -I/usr/lib64/dbus-1.0/include -I/usr/lib/${linux.triplet}/dbus-1.0/include"/>
